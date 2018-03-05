@@ -2,9 +2,11 @@ package com.matt_adshead.mubaloostaff.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.StringDef;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_DEVELOPER;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_TEAM_LEAD;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.CEO;
@@ -17,7 +19,14 @@ import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_TEAM_LEAD;
  * @author matta
  * @date 04/03/2018
  */
-@Entity
+@Entity(
+        foreignKeys = @ForeignKey(
+                entity        = Team.class,
+                parentColumns = "id",
+                childColumns  = "team_id",
+                onDelete      = CASCADE
+        )
+)
 public class Employee {
     @StringDef ({CEO, ANDROID_TEAM_LEAD, ANDROID_DEVELOPER, IOS_TEAM_LEAD, IOS_DEVELOPER})
     public @interface Role {
@@ -30,6 +39,9 @@ public class Employee {
 
     @PrimaryKey
     private int     id;
+
+    @ColumnInfo(name = "team_id")
+    private int     teamId;
 
     @ColumnInfo(name = "first_name")
     private String  firstName;
@@ -47,14 +59,23 @@ public class Employee {
     @ColumnInfo(name = "is_team_lead")
     private boolean teamLead;
 
-    public Employee(String firstName, String lastName, String role, String profileImageUrl,
+    public Employee(int id, String firstName, String lastName, String role, String profileImageUrl,
                     boolean teamLead) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
+        this.id              = id;
+        this.firstName       = firstName;
+        this.lastName        = lastName;
+        this.role            = role;
         this.profileImageUrl = profileImageUrl;
-        this.teamLead = teamLead;
+        this.teamLead        = teamLead;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {

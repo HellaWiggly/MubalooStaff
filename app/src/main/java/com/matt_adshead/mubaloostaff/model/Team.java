@@ -15,29 +15,27 @@ public class Team {
     @PrimaryKey
     private int        id;
 
-    @ColumnInfo(name = "team_name")
-    private String     teamName;
+    @ColumnInfo(name = "name")
+    private String name;
 
-    private Employee[] members;
-
-    public Team(String teamName, Employee[] members) {
-        this.teamName = teamName;
-        this.members = members;
+    public Team(int id, String name) {
+        this.id       = id;
+        this.name = name;
     }
 
-    public String getTeamName() {
-        return teamName;
+    public int getId() {
+        return id;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Employee[] getMembers() {
-        return members;
+    public String getName() {
+        return name;
     }
 
-    public void setMembers(Employee[] members) {
-        this.members = members;
+    public void setName(String name) {
+        this.name = name;
     }
 }
