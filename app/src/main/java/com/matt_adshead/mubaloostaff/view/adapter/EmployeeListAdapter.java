@@ -1,7 +1,9 @@
 package com.matt_adshead.mubaloostaff.view.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +81,15 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
             profileImage = itemView.findViewById(R.id.employee_profile_image);
             fullNameText = itemView.findViewById(R.id.employee_name);
             roleText     = itemView.findViewById(R.id.employee_role);
+
+            // Set the placeholder drawable, will be replaced by glide when Employee is bound.
+            profileImage.setImageDrawable(new ColorDrawable(
+                    ResourcesCompat.getColor(
+                            itemView.getResources(),
+                            R.color.colorAccent,
+                            null
+                    )
+            ));
         }
     }
 }
