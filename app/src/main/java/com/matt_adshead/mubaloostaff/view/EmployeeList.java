@@ -19,6 +19,9 @@ import java.util.List;
  */
 
 public class EmployeeList extends RecyclerView {
+    /**
+     * {@link RecyclerView.Adapter} implementation, handles binding entities to list item views.
+     */
     private EmployeeListAdapter employeeListAdapter;
 
     public EmployeeList(Context context) {
@@ -31,6 +34,11 @@ public class EmployeeList extends RecyclerView {
         init(attrs);
     }
 
+    /**
+     * Initialise the view, using any relevant styleable attributes.
+     *
+     * @param attrs Attribute set.
+     */
     private void init(@Nullable AttributeSet attrs) {
         setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -39,6 +47,11 @@ public class EmployeeList extends RecyclerView {
         setAdapter(employeeListAdapter);
     }
 
+    /**
+     * Pass a list of employees to the adapter so that they can become the new list dataset.
+     *
+     * @param employeeList List of {@link Employee}.
+     */
     public void loadEmployees(List<Employee> employeeList) {
         employeeListAdapter.setEmployeeList(employeeList);
     }

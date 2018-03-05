@@ -14,7 +14,7 @@ import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_DEVELOPER;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_TEAM_LEAD;
 
 /**
- * Employee model.
+ * Employee model, represents a Mubaloo employee.
  *
  * @author matta
  * @date 04/03/2018
@@ -28,6 +28,9 @@ import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_TEAM_LEAD;
         )
 )
 public class Employee {
+    /**
+     * String constants representing job roles at Mubaloo.
+     */
     @StringDef ({CEO, ANDROID_TEAM_LEAD, ANDROID_DEVELOPER, IOS_TEAM_LEAD, IOS_DEVELOPER})
     public @interface Role {
         String CEO               = "CEO",
@@ -37,28 +40,60 @@ public class Employee {
                IOS_DEVELOPER     = "IOS Developer";
     }
 
+    /**
+     * Unique ID for database purposes.
+     */
     @PrimaryKey
     private int     id;
 
+    /**
+     * Foreign key links employees to teams many to one.
+     */
     @ColumnInfo(name = "team_id")
     private int     teamId;
 
+    /**
+     * Employee's first name.
+     */
     @ColumnInfo(name = "first_name")
     private String  firstName;
 
+    /**
+     * Employee's last name.
+     */
     @ColumnInfo(name = "last_name")
     private String  lastName;
 
+    /**
+     * Employee's job role.
+     * See {@link Role}
+     */
     @Role
     @ColumnInfo(name = "role")
     private String  role;
 
+    /**
+     * Employee's profile image URL.
+     */
     @ColumnInfo(name = "profile_image_url")
     private String  profileImageUrl;
 
+    /**
+     * Boolean flag representing whether the employee is a team lead.
+     */
     @ColumnInfo(name = "is_team_lead")
     private boolean teamLead;
 
+    /**
+     * Constructor.
+     *
+     * @param id              Unique ID for database purposes.
+     * @param firstName       First name.
+     * @param lastName        Last name.
+     * @param role            Role, see {@link Role}.
+     * @param profileImageUrl
+     * @param teamLead
+     */
     public Employee(int id, String firstName, String lastName, String role, String profileImageUrl,
                     boolean teamLead) {
 

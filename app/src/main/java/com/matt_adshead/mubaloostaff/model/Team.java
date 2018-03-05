@@ -5,19 +5,31 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
- * Team model.
+ * Team model, represents a team of employees at Mubaloo.
  *
  * @author matta
  * @date 04/03/2018
  */
 @Entity
 public class Team {
+    /**
+     * Unique ID for database purposes.
+     */
     @PrimaryKey
     private int        id;
 
+    /**
+     * Name of the team.
+     */
     @ColumnInfo(name = "name")
     private String name;
 
+    /**
+     * Constructor.
+     *
+     * @param id   Unique ID for database purposes.
+     * @param name Name of the team.
+     */
     public Team(int id, String name) {
         this.id       = id;
         this.name = name;
