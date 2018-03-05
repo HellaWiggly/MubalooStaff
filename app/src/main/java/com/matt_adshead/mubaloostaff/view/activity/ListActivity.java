@@ -26,7 +26,7 @@ public class ListActivity extends AppCompatActivity implements IListView {
 
         presenter = createPresenter();
 
-        presenter.getAllEmployees();
+        presenter.getStaffFromNetworkResource();
     }
 
     private void initViews() {
@@ -34,7 +34,7 @@ public class ListActivity extends AppCompatActivity implements IListView {
     }
 
     private ListPresenter createPresenter() {
-        return new ListPresenter(this);
+        return new ListPresenter(this, this);
     }
 
     @Override

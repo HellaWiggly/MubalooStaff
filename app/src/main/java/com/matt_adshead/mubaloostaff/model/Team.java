@@ -4,24 +4,27 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Team model, represents a team of employees at Mubaloo.
  *
  * @author matta
  * @date 04/03/2018
  */
-@Entity
+@Entity(tableName = "team")
 public class Team {
     /**
      * Unique ID for database purposes.
      */
     @PrimaryKey
-    private int        id;
+    private int    id;
 
     /**
      * Name of the team.
      */
     @ColumnInfo(name = "name")
+    @SerializedName("teamName")
     private String name;
 
     /**

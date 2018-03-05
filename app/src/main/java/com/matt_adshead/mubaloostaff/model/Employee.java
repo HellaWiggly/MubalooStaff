@@ -6,6 +6,8 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.StringDef;
 
+import com.google.gson.annotations.SerializedName;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_DEVELOPER;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_TEAM_LEAD;
@@ -25,7 +27,8 @@ import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_TEAM_LEAD;
                 parentColumns = "id",
                 childColumns  = "team_id",
                 onDelete      = CASCADE
-        )
+        ),
+        tableName = "employee"
 )
 public class Employee {
     /**
@@ -76,6 +79,7 @@ public class Employee {
      * Employee's profile image URL.
      */
     @ColumnInfo(name = "profile_image_url")
+    @SerializedName("profileImageURL")
     private String  profileImageUrl;
 
     /**

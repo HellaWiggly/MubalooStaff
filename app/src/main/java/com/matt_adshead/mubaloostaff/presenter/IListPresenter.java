@@ -8,5 +8,5 @@ package com.matt_adshead.mubaloostaff.presenter;
  */
 public interface IListPresenter {
 
-    void getAllEmployees();
+    void getStaffFromNetworkResource();
 }
