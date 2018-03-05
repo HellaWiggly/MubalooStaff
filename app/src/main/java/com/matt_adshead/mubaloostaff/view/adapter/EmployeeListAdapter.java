@@ -1,6 +1,7 @@
 package com.matt_adshead.mubaloostaff.view.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,22 @@ import java.util.List;
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {
 
     private Context        context;
+
+    @Nullable
     private List<Employee> employeeList;
 
-    public EmployeeListAdapter(Context context, List<Employee> employeeList) {
+    public EmployeeListAdapter(Context context, @Nullable List<Employee> employeeList) {
         this.context      = context;
         this.employeeList = employeeList;
+    }
+
+    public EmployeeListAdapter(Context context) {
+        this(context, null);
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -53,7 +65,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
 
     @Override
     public int getItemCount() {
-        return employeeList.size();
+        return employeeList != null ? employeeList.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -7,4 +7,6 @@ package com.matt_adshead.mubaloostaff.presenter;
  * @date 05/03/2018
  */
 public interface IListPresenter {
+
+    void getAllEmployees();
 }

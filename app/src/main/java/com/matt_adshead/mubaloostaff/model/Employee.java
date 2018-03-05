@@ -78,6 +78,14 @@ public class Employee {
         this.id = id;
     }
 
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
