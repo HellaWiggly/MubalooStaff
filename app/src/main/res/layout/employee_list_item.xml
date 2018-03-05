@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/employee_container"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/standard_margin">
+    <ImageView
+        android:id="@+id/employee_profile_image"
+        android:layout_width="@dimen/profile_thumbnail_width"
+        android:layout_height="@dimen/profile_thumbnail_height"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:background="@color/colorPrimary"/>
+    <TextView
+        android:id="@+id/employee_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/full_name"
+        android:layout_toEndOf="@id/employee_profile_image"/>
+    <TextView
+        android:id="@+id/employee_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/role"
+        android:layout_toEndOf="@id/employee_profile_image"
+        android:layout_below="@id/employee_name"/>
+</RelativeLayout>
