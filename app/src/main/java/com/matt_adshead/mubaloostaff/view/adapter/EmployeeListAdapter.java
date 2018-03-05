@@ -1,8 +1,18 @@
 package com.matt_adshead.mubaloostaff.view.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.matt_adshead.mubaloostaff.R;
+import com.matt_adshead.mubaloostaff.model.Employee;
+
+import java.util.List;
 
 /**
  * RecyclerView.Adapter for EmployeeList.
@@ -12,24 +22,51 @@ import android.view.ViewGroup;
  */
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {
 
+    private Context        context;
+    private List<Employee> employeeList;
+
+    public EmployeeListAdapter(Context context, List<Employee> employeeList) {
+        this.context      = context;
+        this.employeeList = employeeList;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.employee_list_item, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final Employee employee = employeeList.get(position);
 
+        Glide.with(context)
+             .load(employee.getProfileImageUrl())
+             .into(holder.profileImage);
+
+        holder.fullNameText.setText(employee.getFirstName());
+        holder.roleText.setText(employee.getRole());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return employeeList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public View      container;
+        public ImageView profileImage;
+        public TextView  fullNameText, roleText;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            container    = itemView.findViewById(R.id.employee_container);
+            profileImage = itemView.findViewById(R.id.employee_profile_image);
+            fullNameText = itemView.findViewById(R.id.employee_name);
+            roleText     = itemView.findViewById(R.id.employee_role);
         }
     }
 }
