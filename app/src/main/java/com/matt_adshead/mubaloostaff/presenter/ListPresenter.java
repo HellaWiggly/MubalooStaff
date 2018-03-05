@@ -1,7 +1,5 @@
 package com.matt_adshead.mubaloostaff.presenter;
 
-import android.app.Activity;
-
 import com.matt_adshead.mubaloostaff.view.activity.IListView;
 
 /**
