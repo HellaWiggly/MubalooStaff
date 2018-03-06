@@ -2,5 +2,21 @@
     <string name="app_name">MubalooStaff</string>
 
     <string name="full_name">Full Name</string>
+    <string name="team">Team</string>
+    <string name="team_leader">Team Leader</string>
     <string name="role">Role</string>
+    <string name="team_detail_text">Team: %s</string>
+    <string name="role_detail_text">Role: %s</string>
+
+    <string name="loading_elipsis">Loading…</string>
+    <string name="loading_from_local_storage_elipsis">Loading from local storage…</string>
+    <string name="loading_from_online_source_elipsis">Loading from online source…</string>
+
+    <string name="there_is_nothing_here">There\'s nothing here.</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="no_internet_connection">No internet connection.</string>
+    <string name="could_not_locate_employee">Could not locate employee.</string>
+    <string name="could_not_locate_team">Could not locate team.</string>
+    <string name="error_fetching_staff_json">Error fetching staff JSON resource from the server.</string>
+    <string name="error_parsing_staff_json">Error parsing the JSON retrieved from the server.</string>
 </resources>

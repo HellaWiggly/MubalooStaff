@@ -22,6 +22,9 @@ public interface EmployeeDao {
     @Query("SELECT * FROM employee")
     List<Employee> getAll();
 
+    @Query("SELECT * FROM employee WHERE id = :id LIMIT 1")
+    Employee getById(int id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void save(Employee... employees);
 

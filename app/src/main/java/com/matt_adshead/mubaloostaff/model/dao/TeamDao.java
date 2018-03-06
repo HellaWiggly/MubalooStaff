@@ -22,6 +22,9 @@ public interface TeamDao {
     @Query("SELECT * FROM team")
     List<Team> getAll();
 
+    @Query("SELECT * FROM team WHERE id = :id LIMIT 1")
+    Team getById(int id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void save(Team... teams);
 

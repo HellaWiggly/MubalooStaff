@@ -1,17 +1,21 @@
 package com.matt_adshead.mubaloostaff.presenter;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.matt_adshead.mubaloostaff.R;
 import com.matt_adshead.mubaloostaff.model.Employee;
 import com.matt_adshead.mubaloostaff.model.JsonDataPayload;
 import com.matt_adshead.mubaloostaff.model.Team;
 import com.matt_adshead.mubaloostaff.model.database.StaffDatabase;
 import com.matt_adshead.mubaloostaff.utils.StaffJsonParser;
-import com.matt_adshead.mubaloostaff.view.activity.IListView;
+import com.matt_adshead.mubaloostaff.view.ContentView;
+import com.matt_adshead.mubaloostaff.view.IListView;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +23,9 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.HAS_CONTENT;
+import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.LOADING;
 
 /**
  * Presenter for the List Activity.
@@ -117,6 +124,31 @@ public class ListPresenter extends BasePresenter implements IListPresenter {
     }
 
     /**
+     * Get locally stored staff records from the database.
+     */
+    @Override
+    public void getStaffFromDatabase() {
+        AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                final StaffDatabase database = getStaffDatabase();
+
+                final List<Employee> employees = database.employeeDao().getAll();
+
+                view.setEmployees(employees);
+
+                if (employees.size() == 0) {
+                    view.setState(LOADING);
+
+                    view.setLoadingMessage(
+                            context.getString(R.string.loading_from_online_source_elipsis)
+                    );
+                }
+            }
+        });
+    }
+
+    /**
      * Asyncronously:
      *  - Download JSON via HTTP.
      *  - Parse JSON into {@link Employee} and {@link Team}.
@@ -125,6 +157,11 @@ public class ListPresenter extends BasePresenter implements IListPresenter {
      */
     @Override
     public void getStaffFromNetworkResource() {
+        if (!haveNetwork()) {
+            view.setErrorMessage(context.getString(R.string.no_internet_connection));
+            view.setEmployees(null);
+        }
+
         AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
@@ -146,29 +183,52 @@ public class ListPresenter extends BasePresenter implements IListPresenter {
                     database.teamDao().save(payload.getTeams().toArray(new Team[]{}));
                     database.employeeDao().save(payload.getEmployees().toArray(new Employee[]{}));
 
-                    final List<Employee> allEmployees = database.employeeDao().getAll();
-
                     //Return to the view with the new employee list.
                     view.setEmployees(payload.getEmployees());
                 } catch (IOException exception) {
-                    Log.e(
-                            ListPresenter.class.getSimpleName(),
-                            "Error fetching staff JSON resource from the server.",
+                    handleNetworkError(
+                            context.getString(R.string.error_fetching_staff_json),
                             exception
                     );
-                    return;
-                    //todo handle error case.
                 } catch (JsonParseException exception) {
-                    Log.e(
-                            ListPresenter.class.getSimpleName(),
-                            "Error parsing the JSON retrieved from the server.",
+                    handleNetworkError(
+                            context.getString(R.string.error_parsing_staff_json),
                             exception
                     );
-                    return;
-                    //todo handle error case.
                 }
             }
         });
+    }
+
+    /**
+     * Utility function to check if we have a network connection.
+     *
+     * @return Do we have a network connection?
+     */
+    private boolean haveNetwork() {
+        final ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * Utility function to handle network errors. Logs the error and exception and displays
+     * the error message to the user.
+     *
+     * @param errorMessage Error message. (Plain english, shown to user.)
+     * @param exception    Exception object for logging only.
+     */
+    private void handleNetworkError(final String errorMessage, final Throwable exception) {
+        Log.e(
+                ListPresenter.class.getSimpleName(),
+                errorMessage,
+                exception
+        );
+
+        exception.printStackTrace();
+
+        view.setErrorMessage(errorMessage);
     }
 
     /**

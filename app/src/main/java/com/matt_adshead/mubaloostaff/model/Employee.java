@@ -86,7 +86,7 @@ public class Employee {
      * Boolean flag representing whether the employee is a team lead.
      */
     @ColumnInfo(name = "is_team_lead")
-    private boolean teamLead;
+    private boolean teamLead = false;
 
     /**
      * Constructor.

@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 
 import com.matt_adshead.mubaloostaff.model.Employee;
 import com.matt_adshead.mubaloostaff.view.adapter.EmployeeListAdapter;
+import com.matt_adshead.mubaloostaff.view.listener.OnItemClickListener;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  */
 
 public class EmployeeList extends RecyclerView {
+
     /**
      * {@link RecyclerView.Adapter} implementation, handles binding entities to list item views.
      */
@@ -54,5 +56,18 @@ public class EmployeeList extends RecyclerView {
      */
     public void loadEmployees(List<Employee> employeeList) {
         employeeListAdapter.setEmployeeList(employeeList);
+    }
+
+    public int countEmployees() {
+        return employeeListAdapter.getItemCount();
+    }
+
+    /**
+     * Set the OnItemClickListener which will be triggered when an item is clicked.
+     *
+     * @param itemClickListener Item click listener.
+     */
+    public void setItemClickListener(OnItemClickListener<Employee> itemClickListener) {
+        employeeListAdapter.setItemClickListener(itemClickListener);
     }
 }
