@@ -12,8 +12,12 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_DEVELOPER;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.ANDROID_TEAM_LEAD;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.CEO;
+import static com.matt_adshead.mubaloostaff.model.Employee.Role.DESIGNER;
+import static com.matt_adshead.mubaloostaff.model.Employee.Role.DESIGN_TEAM_LEAD;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_DEVELOPER;
 import static com.matt_adshead.mubaloostaff.model.Employee.Role.IOS_TEAM_LEAD;
+import static com.matt_adshead.mubaloostaff.model.Employee.Role.WEB_DEVELOPER;
+import static com.matt_adshead.mubaloostaff.model.Employee.Role.WEB_TEAM_LEAD;
 
 /**
  * Employee model, represents a Mubaloo employee.
@@ -34,13 +38,18 @@ public class Employee {
     /**
      * String constants representing job roles at Mubaloo.
      */
-    @StringDef ({CEO, ANDROID_TEAM_LEAD, ANDROID_DEVELOPER, IOS_TEAM_LEAD, IOS_DEVELOPER})
+    @StringDef ({CEO, ANDROID_TEAM_LEAD, ANDROID_DEVELOPER, IOS_TEAM_LEAD, IOS_DEVELOPER,
+                 WEB_TEAM_LEAD, WEB_DEVELOPER, DESIGN_TEAM_LEAD, DESIGNER})
     public @interface Role {
         String CEO               = "CEO",
                ANDROID_TEAM_LEAD = "Android Team Lead",
                ANDROID_DEVELOPER = "Android Developer",
                IOS_TEAM_LEAD     = "IOS Team Lead",
-               IOS_DEVELOPER     = "IOS Developer";
+               IOS_DEVELOPER     = "IOS Developer",
+               WEB_TEAM_LEAD     = "Web Team Lead",
+               WEB_DEVELOPER     = "Web Developer",
+               DESIGN_TEAM_LEAD  = "Design Team Lead",
+               DESIGNER          = "Designer";
     }
 
     /**
