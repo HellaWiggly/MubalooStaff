@@ -82,10 +82,13 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         holder.nameText.setText(employee.getFirstName());
         holder.roleText.setText(employee.getRole());
 
-        if (employee.isTeamLead()) {
-            setHolderBackgroundColour(holder, R.color.color_primary);
-            setTextColourWhite(holder);
-        }
+
+        // todo A nice idea but for some reason as you scroll around this gets hit when
+        //      employee.isTeamLead() should resolve to false. Can't figure out the reason rn.
+        //        if (employee.isTeamLead()) {
+        //            setHolderBackgroundColour(holder, R.color.color_primary);
+        //            setTextColourWhite(holder);
+        //        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
