@@ -21,25 +21,48 @@ import java.util.List;
 
 public class EmployeeList extends RecyclerView {
 
+    // ********************************************************************************************
+    // * Variables
+    // ********************************************************************************************
+
     /**
      * {@link RecyclerView.Adapter} implementation, handles binding entities to list item views.
      */
     private EmployeeListAdapter employeeListAdapter;
 
+    // ********************************************************************************************
+    // * Constructors
+    // ********************************************************************************************
+
+    /**
+     * Constructor.
+     *
+     * @param context Calling context.
+     */
     public EmployeeList(Context context) {
         super(context);
         init(null);
     }
 
+    /**
+     * Constructor with attributes.
+     *
+     * @param context Calling context.
+     * @param attrs   Attributes.
+     */
     public EmployeeList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
+    // ********************************************************************************************
+    // * Initialization
+    // ********************************************************************************************
+
     /**
      * Initialise the view, using any relevant styleable attributes.
      *
-     * @param attrs Attribute set.
+     * @param attrs Styleable attributes.
      */
     private void init(@Nullable AttributeSet attrs) {
         setLayoutManager(new LinearLayoutManager(getContext()));
@@ -50,7 +73,20 @@ public class EmployeeList extends RecyclerView {
     }
 
     /**
-     * Pass a list of employees to the adapter so that they can become the new list dataset.
+     * Set the OnItemClickListener which will be triggered when an item is clicked.
+     *
+     * @param itemClickListener Item click listener.
+     */
+    public void setItemClickListener(OnItemClickListener<Employee> itemClickListener) {
+        employeeListAdapter.setItemClickListener(itemClickListener);
+    }
+
+    // ********************************************************************************************
+    // * View Methods
+    // ********************************************************************************************
+
+    /**
+     * Pass a list of employees to the adapter so that they can become the new list data-set.
      *
      * @param employeeList List of {@link Employee}.
      */
@@ -58,16 +94,10 @@ public class EmployeeList extends RecyclerView {
         employeeListAdapter.setEmployeeList(employeeList);
     }
 
+    /**
+     * @return The number of items currently in the list.
+     */
     public int countEmployees() {
         return employeeListAdapter.getItemCount();
-    }
-
-    /**
-     * Set the OnItemClickListener which will be triggered when an item is clicked.
-     *
-     * @param itemClickListener Item click listener.
-     */
-    public void setItemClickListener(OnItemClickListener<Employee> itemClickListener) {
-        employeeListAdapter.setItemClickListener(itemClickListener);
     }
 }

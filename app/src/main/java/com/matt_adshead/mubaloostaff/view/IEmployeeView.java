@@ -1,7 +1,5 @@
 package com.matt_adshead.mubaloostaff.view;
 
-import android.content.Context;
-
 import com.matt_adshead.mubaloostaff.model.Employee;
 import com.matt_adshead.mubaloostaff.model.Team;
 

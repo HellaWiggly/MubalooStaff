@@ -11,7 +11,9 @@ import com.matt_adshead.mubaloostaff.model.dao.EmployeeDao;
 import com.matt_adshead.mubaloostaff.model.dao.TeamDao;
 
 /**
- * App database object.
+ * App database object. Extends RoomDatabase, holds {@link Employee} and {@link Team} DAOs.
+ *
+ * @see {@url https://developer.android.com/training/data-storage/room/index.html}
  *
  * @author Matt
  * @date 05/03/2018

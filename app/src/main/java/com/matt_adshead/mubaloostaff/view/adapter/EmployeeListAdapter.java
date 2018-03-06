@@ -28,14 +28,30 @@ import static com.matt_adshead.mubaloostaff.model.Employee.Role.CEO;
  */
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.ViewHolder> {
 
+    /**
+     * Calling context.
+     */
     private Context        context;
 
+    /**
+     * List of employees to represent in the RecyclerView.
+     */
     @Nullable
     private List<Employee> employeeList;
 
+    /**
+     * Item click listener, called when an item is clicked.
+     */
     @Nullable
     private OnItemClickListener<Employee> itemClickListener;
 
+    /**
+     * Constructor.
+     *
+     * @param context           Calling context.
+     * @param employeeList      List of employees.
+     * @param itemClickListener Item click listener.
+     */
     public EmployeeListAdapter(Context context, @Nullable List<Employee> employeeList,
                                @Nullable OnItemClickListener<Employee> itemClickListener) {
         this.context      = context;
@@ -43,24 +59,46 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         this.itemClickListener = itemClickListener;
     }
 
+    /**
+     * Shortcut constructor signature for omitting employeeList at construct time.
+     *
+     * @param context           Calling context.
+     * @param itemClickListener Item click listener.
+     */
     public EmployeeListAdapter(Context context,
                                @Nullable OnItemClickListener<Employee> itemClickListener) {
 
         this(context, null, itemClickListener);
     }
 
+    /**
+     * Shortcut constructor signature for omitting employeeList and itemClickListener at
+     * construct time.
+     *
+     * @param context Calling context.
+     */
     public EmployeeListAdapter(Context context) {
         this(context, null, null);
     }
 
+    /**
+     * @param employeeList Employee list.
+     */
     public void setEmployeeList(@Nullable List<Employee> employeeList) {
         this.employeeList = employeeList;
         notifyDataSetChanged();
     }
 
+    /**
+     * @param itemClickListener Item click listener.
+     */
     public void setItemClickListener(@Nullable OnItemClickListener<Employee> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
+
+    // ********************************************************************************************
+    // * RecyclerView.Adapter Methods
+    // ********************************************************************************************
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,6 +143,16 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         return employeeList != null ? employeeList.size() : 0;
     }
 
+    // ********************************************************************************************
+    // * Utility Methods
+    // ********************************************************************************************
+
+    /**
+     * Set the background colour of a ViewHolder.
+     *
+     * @param holder ViewHolder to apply transformation to.
+     * @param colour Colour resource ID.
+     */
     private void setHolderBackgroundColour(final ViewHolder holder, final int colour) {
         holder.itemView.setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -115,6 +163,12 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         );
     }
 
+    /**
+     * Switch the TextViews to have white text color.
+     * Should be used in conjunction with {@link #setTextColourWhite(ViewHolder)}}.
+     *
+     * @param holder ViewHolder to apply transformation to.
+     */
     private void setTextColourWhite(final ViewHolder holder) {
         holder.nameText.setTextColor(
                 ResourcesCompat.getColor(
@@ -133,16 +187,29 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         );
     }
 
+    /**
+     * Inner class defining the ViewHolder for a list item.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        // ****************************************************************************************
+        // * Views
+        // ****************************************************************************************
+
         public View      container;
         public ImageView profileImage;
         public TextView nameText, roleText;
 
+        /**
+         * Constructor.
+         *
+         * @param itemView Root View.
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             container    = itemView.findViewById(R.id.employee_container);
             profileImage = itemView.findViewById(R.id.employee_profile_image);
-            nameText = itemView.findViewById(R.id.employee_name);
+            nameText     = itemView.findViewById(R.id.employee_name);
             roleText     = itemView.findViewById(R.id.employee_role);
 
             // Set the placeholder drawable, will be replaced by glide when Employee is bound.

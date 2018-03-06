@@ -25,15 +25,41 @@ import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.LOADIN
 
 public class EmployeeActivity extends AppCompatActivity implements IEmployeeView {
 
+    // ********************************************************************************************
+    // * Constants
+    // ********************************************************************************************
+    
+    /**
+     * Key for the employee ID, used to store it in the Intent {@link Bundle}.
+     */
     public final static String KEY_EMPLOYEE_ID = "employee_id";
 
+    // ********************************************************************************************
+    // * Views
+    // ********************************************************************************************
+    
     private LoadingSpinner loadingSpinner;
     private ImageView      profileImage;
     private TextView       nameText, teamText, roleText, errorText;
     private View           contentView;
 
+    // ********************************************************************************************
+    // * Variables
+    // ********************************************************************************************
+
+    /**
+     * The presenter for this view.
+     */
     private IEmployeePresenter presenter;
+
+    /**
+     * Employee unique ID.
+     */
     private int                employeeId;
+
+    // ********************************************************************************************
+    // * Lifecycle Callbacks
+    // ********************************************************************************************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +81,13 @@ public class EmployeeActivity extends AppCompatActivity implements IEmployeeView
         presenter.getEmployee(employeeId);
     }
 
+    // ********************************************************************************************
+    // * Initialisation
+    // ********************************************************************************************
+
+    /**
+     * Initialise the activity's views.
+     */
     private void initViews() {
         profileImage = findViewById(R.id.employee_profile_image);
         profileImage.setImageDrawable(new ColorDrawable(
@@ -73,10 +106,24 @@ public class EmployeeActivity extends AppCompatActivity implements IEmployeeView
         errorText      = findViewById(R.id.error_message);
     }
 
+    /**
+     * @return The presenter for this view.
+     * todo Inject
+     */
     private IEmployeePresenter createPresenter() {
         return new EmployeePresenter(this, this);
     }
 
+    // ********************************************************************************************
+    // * View Methods
+    // ********************************************************************************************
+
+    /**
+     * Set the employee this view displays.
+     *
+     * @param employee Employee.
+     * @param team     Associated Team.
+     */
     @Override
     public void setEmployee(final Employee employee, final Team team) {
         final Context context = this;
@@ -102,18 +149,31 @@ public class EmployeeActivity extends AppCompatActivity implements IEmployeeView
         });
     }
 
+    /**
+     * Set and show the view error message.
+     *
+     * @param errorMessage Error message string.
+     */
     @Override
     public void setErrorMessage(String errorMessage) {
         errorText.setText(errorMessage);
         errorText.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Clear the view error message and hide the component.
+     */
     @Override
     public void clearErrorMessage() {
         errorText.setText(null);
         errorText.setVisibility(View.GONE);
     }
 
+    /**
+     * Set the content state of the view.
+     *
+     * @param state Whether the view has loaded content yet, and if it has whether it is empty.
+     */
     @Override
     public void setState(@ContentState final int state) {
         runOnUiThread(new Runnable() {

@@ -18,19 +18,37 @@ import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.HAS_CO
  * @author matta
  * @date 05/03/2018
  */
-
 public class EmployeePresenter extends BasePresenter implements IEmployeePresenter {
 
+    /**
+     * Calling context.
+     */
     private Context       context;
+
+    /**
+     * Employee view reference.
+     */
     private IEmployeeView view;
 
+    /**
+     * Database reference for retrieving an Employee by ID.
+     */
     private StaffDatabase staffDatabase;
 
+    /**
+     * Constructor.
+     *
+     * @param context Calling context.
+     * @param view    Employee view reference.
+     */
     public EmployeePresenter(Context context, IEmployeeView view) {
         this.context = context;
         this.view = view;
     }
 
+    /**
+     * @return Lazy loaded singleton staff database.
+     */
     private StaffDatabase getStaffDatabase() {
         if (staffDatabase == null) {
             staffDatabase = StaffDatabase.getInstance(context);
@@ -39,6 +57,11 @@ public class EmployeePresenter extends BasePresenter implements IEmployeePresent
         return staffDatabase;
     }
 
+    /**
+     * Asynchronously fetch the employee and their corresponding team.
+     *
+     * @param id Employee ID.
+     */
     @Override
     public void getEmployee(final int id) {
         AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {

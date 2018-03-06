@@ -15,11 +15,17 @@ import com.matt_adshead.mubaloostaff.R;
  * @author matta
  * @date 05/03/2018
  */
-
 public class LoadingSpinner extends RelativeLayout {
 
+    // ********************************************************************************************
+    // * Views
+    // ********************************************************************************************
+
     private TextView    textView;
-    private ProgressBar progressBar;
+
+    // ********************************************************************************************
+    // * Constructors
+    // ********************************************************************************************
 
     public LoadingSpinner(Context context) {
         super(context);
@@ -31,13 +37,30 @@ public class LoadingSpinner extends RelativeLayout {
         init(attrs);
     }
 
+    // ********************************************************************************************
+    // * Initialization
+    // ********************************************************************************************
+
+    /**
+     * Initialize the View's Views.
+     *
+     * @param attrs Styleable attributes.
+     */
     private void init(@Nullable AttributeSet attrs) {
         inflate(getContext(), R.layout.loading_spinner, this);
 
         textView    = findViewById(R.id.loading_message);
-        progressBar = findViewById(R.id.progress_bar);
     }
 
+    // ********************************************************************************************
+    // * View Methods
+    // ********************************************************************************************
+
+    /**
+     * Set the text shown next to the loading spinner.
+     *
+     * @param message Loading message.
+     */
     public void setMessage(String message) {
         textView.setText(message);
     }

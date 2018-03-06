@@ -14,10 +14,19 @@ import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.LOADIN
  */
 
 public interface ContentView {
+    /**
+     * Constants representing whether the view has loaded content yet,
+     * and if it has whether it is empty.
+     */
     @IntDef({LOADING, HAS_CONTENT, EMPTY})
     @interface ContentState {
         int LOADING = 0, HAS_CONTENT = 1, EMPTY = 2;
     }
 
+    /**
+     * Interface method. Implemented by Views. Sets the content state.
+     *
+     * @param state Content state.
+     */
     void setState(@ContentState int state);
 }

@@ -14,7 +14,6 @@ import com.matt_adshead.mubaloostaff.model.JsonDataPayload;
 import com.matt_adshead.mubaloostaff.model.Team;
 import com.matt_adshead.mubaloostaff.model.database.StaffDatabase;
 import com.matt_adshead.mubaloostaff.utils.StaffJsonParser;
-import com.matt_adshead.mubaloostaff.view.ContentView;
 import com.matt_adshead.mubaloostaff.view.IListView;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.HAS_CONTENT;
 import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.LOADING;
 
 /**
@@ -35,6 +33,10 @@ import static com.matt_adshead.mubaloostaff.view.ContentView.ContentState.LOADIN
  */
 public class ListPresenter extends BasePresenter implements IListPresenter {
 
+    /**
+     * URL location of the remote staff JSON resource.
+     * todo Make this configurable.
+     */
     private final static String STAFF_JSON_RESOURCE_URL =
             "https://developers.mub.lu/resources/team.json";
 
@@ -106,7 +108,7 @@ public class ListPresenter extends BasePresenter implements IListPresenter {
      */
     private StaffJsonParser getStaffJsonParser() {
         if (staffJsonParser == null) {
-            staffJsonParser = new StaffJsonParser(getGson());
+            staffJsonParser = new StaffJsonParser(context, getGson());
         }
 
         return staffJsonParser;

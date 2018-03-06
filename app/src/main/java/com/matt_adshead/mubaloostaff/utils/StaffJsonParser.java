@@ -1,5 +1,6 @@
 package com.matt_adshead.mubaloostaff.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -7,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.matt_adshead.mubaloostaff.R;
 import com.matt_adshead.mubaloostaff.model.Employee;
 import com.matt_adshead.mubaloostaff.model.JsonDataPayload;
 import com.matt_adshead.mubaloostaff.model.Team;
@@ -20,20 +22,45 @@ import java.util.List;
  * @author matta
  * @date 05/03/2018
  */
-
 public class StaffJsonParser {
 
+    /**
+     * String constants for JSON keys which we need to reference while parsing.
+     */
     private final static String KEY_FIRSTNAME = "firstName",
                                 KEY_LASTNAME  = "lastName",
                                 KEY_TEAMNAME  = "teamName",
                                 KEY_MEMBERS   = "members";
 
+    /**
+     * Calling context.
+     */
+    private Context context;
+
+    /**
+     * Gson object for deserializing objects from JSON.
+     */
     private Gson gson;
 
-    public StaffJsonParser(Gson gson) {
+    /**
+     * Constructor.
+     *
+     * @param context Calling context.
+     * @param gson    Gson object for deserializing objects from JSON.
+     */
+    public StaffJsonParser(Context context, Gson gson) {
+        this.context = context;
         this.gson = gson;
     }
 
+    /**
+     * Iterate over the JSON in the resource and create a {@link JsonDataPayload} containing
+     * the {@link Team}s and {@link Employee}s encoded within.
+     *
+     * @param  json               Serialized JSON string.
+     * @return                    Team and Employee entities.
+     * @throws JsonParseException On parsing errors.
+     */
     public JsonDataPayload parseJson(String json) throws JsonParseException {
         //Deserialize the top-level array.
         final JsonArray jsonArray = gson.fromJson(json, JsonArray.class);
@@ -45,18 +72,14 @@ public class StaffJsonParser {
         // We want a team ID for the database but it isn't set in the JSON so we generate it.
         int teamId = 1;
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            final JsonElement element = jsonArray.get(i);
+        for (int arrayIndex = 0; arrayIndex < jsonArray.size(); arrayIndex++) {
+            final JsonElement element = jsonArray.get(arrayIndex);
 
             if (!element.isJsonObject()) {
-                Log.e(
-                        StaffJsonParser.class.getSimpleName(),
-                        String.format(
-                                "Expecting object, found array. Index: %d",
-                                i
-                        )
-                );
-                continue;
+                throw new JsonParseException(context.getString(
+                        R.string.unexpected_json_array,
+                        arrayIndex
+                ));
             }
 
             JsonObject jsonObject = element.getAsJsonObject();
@@ -84,16 +107,14 @@ public class StaffJsonParser {
 
                 // Get the team's members array, validate that it is indeed an array.
                 final JsonElement membersElement = jsonObject.get(KEY_MEMBERS);
+
                 if (!membersElement.isJsonArray()) {
-                    Log.e(
-                            StaffJsonParser.class.getSimpleName(),
-                            String.format(
-                                    "Expecting members array, found object. Index: %d",
-                                    i
-                            )
-                    );
-                    continue;
+                    throw new JsonParseException(context.getString(
+                            R.string.unexpected_json_object,
+                            arrayIndex
+                    ));
                 }
+
                 final JsonArray membersArray = membersElement.getAsJsonArray();
 
                 //Deserialize members from JSON.

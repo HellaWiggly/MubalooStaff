@@ -19,4 +19,6 @@
     <string name="could_not_locate_team">Could not locate team.</string>
     <string name="error_fetching_staff_json">Error fetching staff JSON resource from the server.</string>
     <string name="error_parsing_staff_json">Error parsing the JSON retrieved from the server.</string>
+    <string name="unexpected_json_array">JSON parsing: Expecting object, found array. Index: %d</string>
+    <string name="unexpected_json_object">JSON parsing: Expecting array, found object. Index: %d</string>
 </resources>
